@@ -5,17 +5,30 @@
  */
 package com.bank.screens;
 
+import com.bank.main.Customer;
+import com.bank.pro.A;
+import java.sql.SQLException;
+
 /**
  *
  * @author rutvij
  */
 public class CreateAccount extends javax.swing.JFrame {
-
+    private MainScreen m;
     /**
      * Creates new form CreateAccount
      */
     public CreateAccount() {
         initComponents();
+    }
+
+    CreateAccount(MainScreen m) {
+        initComponents();
+        this.m = m;
+        /*This is the reference of the original MainScreen so that we use the same instance
+        to update our label message in the same screen rather than creating a new screen by
+        creating a new instance as we did earlier
+        */
     }
 
     /**
@@ -38,8 +51,6 @@ public class CreateAccount extends javax.swing.JFrame {
         lblAccountNumber = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Create Account");
 
@@ -73,6 +84,11 @@ public class CreateAccount extends javax.swing.JFrame {
         });
 
         jButton2.setText("Create Account");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,6 +171,38 @@ public class CreateAccount extends javax.swing.JFrame {
         //code is long type so convert it into String
         lblAccountNumber.setText(Long.toString(code));
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //call the DBConfig function
+        //we will call DBConfig from class A
+        A a = new A();
+        Customer c = new Customer();
+        String name = txtName.getText();
+        String address = txtAddress.getText(); 
+        String email = txtEmail.getText();
+        c.setName(name);
+        c.setAddress(address);
+        c.setEmail(email);
+        c.setAccountNumber(lblAccountNumber.getText());
+        c.setBalance(Integer.toString(0));
+        try{
+        a.createAccount(c);
+//        MainScreen m = new MainScreen();
+        m.setLblMsg("Account Created Successfully");
+        /*Since a new MainScreen object is created we need to set it visible and
+        close the old MainScreen(Screen has been updated)
+        */
+        m.setVisible(true);
+        setVisible(false);
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        catch(ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
