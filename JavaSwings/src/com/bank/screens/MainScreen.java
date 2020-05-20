@@ -5,7 +5,11 @@
  */
 package com.bank.screens;
 
+import com.bank.exceptions.InvalidAccountNumberException;
+import com.bank.main.Customer;
 import javax.swing.JLabel;
+import com.bank.pro.B;
+import java.sql.SQLException;
 
 /**
  *
@@ -56,6 +60,11 @@ public class MainScreen extends javax.swing.JFrame {
         });
 
         jButton2.setText("Deposit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Withdrawal");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +149,31 @@ public class MainScreen extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String accountNumber = txtAccountNumber.getText();
+        B b = new B();
+        try{
+        b.checkAccountNumber(accountNumber);
+        //Load deposit screen
+        /*We could've passed Customer inside the constructor of Deposit
+        instead we will go to DB and fetch Customer details from the account number
+        */
+        Customer c = b.fetchCustomerDetails(accountNumber);
+        Deposit d = new Deposit(c,this);
+        d.setVisible(true);
+        
+        }
+        catch(ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        catch(InvalidAccountNumberException ex){
+            lblMsg.setText(ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

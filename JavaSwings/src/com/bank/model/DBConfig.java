@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import com.bank.main.Customer;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
 
 public class DBConfig {
     //Step 1: Providing information of the database
@@ -52,6 +54,79 @@ before using*/
         pstmt.executeUpdate();//Executes sql statement
         dbClose();
     }
+
+    public boolean checkAccountNumber(String accountNumber) throws ClassNotFoundException, SQLException {
+        dbConnect();
+        //Creating a sql query
+        int count = 0;
+        String sql ="select * from customer where accountNumber=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1,accountNumber);
+        ResultSet rst = pstmt.executeQuery();//executeQuery is to fetch info whereas executeUpdate is for create,delete,update info 
+        while(rst.next()){//if account number is present it returns true and goes into while(see javadoc)
+          count = 1;  
+        }
+        dbClose();
+        if(count==1){
+            return true;
+        }
+        return false;
+    }
+
+    public Customer fetchCustomerDetails(String accountNumber) throws ClassNotFoundException, SQLException {
+        dbConnect();
+        Customer c = new Customer();
+        String sql = "select * from customer where accountNumber=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1,accountNumber);
+        ResultSet rst = pstmt.executeQuery();
+        while(rst.next()){
+            c.setName(rst.getString(2));
+            c.setAddress(rst.getString(3));
+            c.setEmail(rst.getString(4));
+            c.setAccountNumber(rst.getString(5));
+            c.setBalance(rst.getString(6));
+        }
+        dbClose();
+        return c;
+        
+    }
+
+    public void saveTransaction(Customer c, String amount) throws ClassNotFoundException, SQLException {
+        dbConnect();
+
+        String sql = "insert into transactions(accountNumber,amount,initialBalance,finalBalance,dateOfTransaction) "
+                + "values (?,?,?,?,?)";
+        
+        
+        double amt = Double.parseDouble(amount);
+        double iniBal = Double.parseDouble(c.getBalance());
+        double finalBal = amt + iniBal;
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        //Passing the values
+        pstmt.setString(1,c.getAccountNumber());
+        pstmt.setString(2,amount);
+        pstmt.setString(3,c.getBalance());
+        pstmt.setString(4,Double.toString(finalBal));
+        pstmt.setString(5,LocalDate.now().toString());
+        pstmt.executeUpdate();//Executes sql statement
+        dbClose();
+    }
+
+    public void updateBalance(double updatedBalance, Customer c) throws ClassNotFoundException, SQLException {
+        dbConnect();
+
+        String sql = "update customer SET balance = ? where accountNumber=?";
+    
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        //Passing the values
+        pstmt.setString(1,Double.toString(updatedBalance));
+        pstmt.setString(2,c.getAccountNumber());
+
+        pstmt.executeUpdate();//Executes sql statement
+        dbClose();
+    }
+    
     
     
 }
