@@ -95,8 +95,8 @@ before using*/
     public void saveTransaction(Customer c, String amount) throws ClassNotFoundException, SQLException {
         dbConnect();
 
-        String sql = "insert into transactions(accountNumber,amount,initialBalance,finalBalance,dateOfTransaction) "
-                + "values (?,?,?,?,?)";
+        String sql = "insert into transactions(accountNumber,amount,initialBalance,finalBalance,dateOfTransaction,operation) "
+                + "values (?,?,?,?,?,?)";
         
         
         double amt = Double.parseDouble(amount);
@@ -109,6 +109,7 @@ before using*/
         pstmt.setString(3,c.getBalance());
         pstmt.setString(4,Double.toString(finalBal));
         pstmt.setString(5,LocalDate.now().toString());
+        pstmt.setString(6,"Deposit");
         pstmt.executeUpdate();//Executes sql statement
         dbClose();
     }
@@ -125,6 +126,46 @@ before using*/
 
         pstmt.executeUpdate();//Executes sql statement
         dbClose();
+    }
+
+    public void saveWithdrawalTransaction(Customer c, String amount) throws SQLException, ClassNotFoundException {
+            dbConnect();
+
+        String sql = "insert into transactions(accountNumber,amount,initialBalance,finalBalance,dateOfTransaction,operation) "
+                + "values (?,?,?,?,?,?)";
+        
+        
+        double amt = Double.parseDouble(amount);
+        double iniBal = Double.parseDouble(c.getBalance());
+        double finalBal = iniBal - amt;
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        //Passing the values
+        pstmt.setString(1,c.getAccountNumber());
+        pstmt.setString(2,amount);
+        pstmt.setString(3,c.getBalance());
+        pstmt.setString(4,Double.toString(finalBal));
+        pstmt.setString(5,LocalDate.now().toString());
+        pstmt.setString(6,"Withdrawal");
+        pstmt.executeUpdate();//Executes sql statement
+        dbClose();
+    }
+
+    public Customer fetchTransactions(String accountNumber) throws ClassNotFoundException, SQLException {
+            dbConnect();
+            Customer c = new Customer();
+            String sql="select * from customer where accountNumber=?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, accountNumber);
+            ResultSet rst = pstmt.executeQuery();
+            while(rst.next()){
+                c.setName(rst.getString(2));
+                c.setAddress(rst.getString(3));
+                c.setEmail(rst.getString(4));
+                c.setAccountNumber(rst.getString(5));
+                c.setBalance(rst.getString(6));
+            }
+            dbClose();
+            return c;
     }
     
     

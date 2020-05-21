@@ -10,18 +10,21 @@ import com.bank.main.Customer;
 import javax.swing.JLabel;
 import com.bank.pro.B;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Rutvij
  */
 public class MainScreen extends javax.swing.JFrame {
-
+        private B b;
     /**
      * Creates new form MainScreen
      */
     public MainScreen() {
         initComponents();
+        b = new B();
     }
 
     /**
@@ -143,16 +146,48 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAccountNumberActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+String accountNumber = txtAccountNumber.getText();
+        try{
+        b.checkAccountNumber(accountNumber);
+        //Load deposit screen
+        /*We could've passed Customer inside the constructor of Deposit
+        instead we will go to DB and fetch Customer details from the account number
+        */
+        Customer c = b.fetchCustomerDetails(accountNumber);
+        Withdrawal w = new Withdrawal(c,this);
+        w.setVisible(true);
+        
+        }
+        catch(ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        catch(InvalidAccountNumberException ex){
+            lblMsg.setText(ex.getMessage());
+        }
+              
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        String accountNumber = txtAccountNumber.getText();
+            try {
+                b.checkAccountNumber(accountNumber);
+                Customer c = b.fetchCustomerDetails(accountNumber);
+                Statement s = new Statement(c);
+                s.setVisible(true);
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } catch (InvalidAccountNumberException ex) {
+                lblMsg.setText(ex.getMessage());
+            }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String accountNumber = txtAccountNumber.getText();
-        B b = new B();
         try{
         b.checkAccountNumber(accountNumber);
         //Load deposit screen

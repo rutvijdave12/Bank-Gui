@@ -55,5 +55,6 @@ public class Customer {
     public void setBalance(String balance) {
         this.balance = balance;
     }
-    
+
+   
 }

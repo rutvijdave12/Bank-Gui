@@ -5,25 +5,30 @@
  */
 package com.bank.screens;
 
+import com.bank.exceptions.InsufficientFundsException;
 import com.bank.main.Customer;
 import com.bank.pro.B;
+import com.bank.pro.C;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author rutvij
  */
-public class Deposit extends javax.swing.JFrame {
+public class Withdrawal extends javax.swing.JFrame {
     private Customer c;
     private MainScreen m;
 
     /**
-     * Creates new form Deposit
+     * Creates new form Withdrawal
      */
-    public Deposit() {
+    public Withdrawal(){ 
         initComponents();
     }
-    public Deposit(Customer c,MainScreen m) {
+   
+    public Withdrawal(Customer c,MainScreen m){
         initComponents();
         this.c = c;
         this.m = m;
@@ -32,8 +37,9 @@ public class Deposit extends javax.swing.JFrame {
         lblAddress.setText(c.getAddress());
         lblAccountNumber.setText(c.getAccountNumber());
         lblCurrentBalance.setText(c.getBalance());
-    }
     
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,25 +51,40 @@ public class Deposit extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblAddress = new javax.swing.JLabel();
+        lblAccountNumber = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        lblCurrentBalance = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        txtWithdrawalAmount = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         lblName = new javax.swing.JLabel();
-        lblEmail = new javax.swing.JLabel();
-        lblAddress = new javax.swing.JLabel();
-        lblAccountNumber = new javax.swing.JLabel();
-        lblCurrentBalance = new javax.swing.JLabel();
-        txtDepositAmount = new javax.swing.JTextField();
+        lblMsg = new javax.swing.JLabel();
 
-        jLabel1.setText("Deposit");
+        jLabel1.setText("Withdrawal");
+
+        lblEmail.setText("--");
+
+        lblAddress.setText("--");
+
+        lblAccountNumber.setText("--");
 
         jLabel2.setText("Name:");
 
+        lblCurrentBalance.setText("--");
+
         jLabel3.setText("Email:");
+
+        txtWithdrawalAmount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtWithdrawalAmountActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Address:");
 
@@ -71,9 +92,9 @@ public class Deposit extends javax.swing.JFrame {
 
         jLabel6.setText("Current Balance:");
 
-        jLabel7.setText("Deposit Amount:");
+        jLabel7.setText("Withdrawal  Amount:");
 
-        jButton1.setText("Proceed Deposit");
+        jButton1.setText("Proceed Withdrawal");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -82,51 +103,46 @@ public class Deposit extends javax.swing.JFrame {
 
         lblName.setText("--");
 
-        lblEmail.setText("--");
-
-        lblAddress.setText("--");
-
-        lblAccountNumber.setText("--");
-
-        lblCurrentBalance.setText("--");
-
-        txtDepositAmount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDepositAmountActionPerformed(evt);
-            }
-        });
+        lblMsg.setText("--");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addGap(111, 111, 111)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1)
-                    .addComponent(lblName)
-                    .addComponent(lblEmail)
-                    .addComponent(lblAddress)
-                    .addComponent(lblAccountNumber)
-                    .addComponent(lblCurrentBalance)
-                    .addComponent(txtDepositAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(219, 219, 219))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(289, 289, 289)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(111, 111, 111)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblName)
+                            .addComponent(lblEmail)
+                            .addComponent(lblAddress)
+                            .addComponent(lblAccountNumber)
+                            .addComponent(lblCurrentBalance)
+                            .addComponent(txtWithdrawalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1)
+                            .addComponent(lblMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblMsg)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lblName))
@@ -149,40 +165,43 @@ public class Deposit extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtDepositAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(37, 37, 37))
+                    .addComponent(txtWithdrawalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtWithdrawalAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWithdrawalAmountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtWithdrawalAmountActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Read Deposit amount
-        String amount = txtDepositAmount.getText();
+        String amount = txtWithdrawalAmount.getText();
         //Go to DB and save details in transaction table
-        B b = new B();
+        C cObj = new C();
         try{
-        b.saveTransaction(c,amount);
-        //go to DB and update the balance in customer table
-        double updatedBalance = Double.parseDouble(amount) + Double.parseDouble(c.getBalance());
-        b.updateBalance(updatedBalance,c);
-        m.setLblMsg("Deposit Successful");
-        setVisible(false);
-        
+            cObj.checkAmount(amount,c.getBalance());
+            cObj.saveTransaction(c,amount);
+            //go to DB and update the balance in customer table
+            double updatedBalance = Double.parseDouble(c.getBalance()) - Double.parseDouble(amount);
+            cObj.updateBalance(updatedBalance,c);
+            m.setLblMsg("Withdrawal Successful");
+            setVisible(false);
+
         }
         catch(ClassNotFoundException ex){
             ex.printStackTrace();
         }
         catch(SQLException ex){
             ex.printStackTrace();
+        } catch (InsufficientFundsException ex) {
+            lblMsg.setText(ex.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void txtDepositAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDepositAmountActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDepositAmountActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,20 +220,20 @@ public class Deposit extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Deposit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Withdrawal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Deposit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Withdrawal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Deposit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Withdrawal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Deposit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Withdrawal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Deposit().setVisible(true);
+                new Withdrawal().setVisible(true);
             }
         });
     }
@@ -232,7 +251,8 @@ public class Deposit extends javax.swing.JFrame {
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblCurrentBalance;
     private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblMsg;
     private javax.swing.JLabel lblName;
-    private javax.swing.JTextField txtDepositAmount;
+    private javax.swing.JTextField txtWithdrawalAmount;
     // End of variables declaration//GEN-END:variables
 }
