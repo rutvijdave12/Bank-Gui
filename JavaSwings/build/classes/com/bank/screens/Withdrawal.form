@@ -45,11 +45,11 @@
                           <Component id="lblCurrentBalance" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="txtWithdrawalAmount" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
                           <Component id="jButton1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblMsg" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="lblMsg" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="214" max="32767" attributes="0"/>
+              <EmptySpace pref="149" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

@@ -132,8 +132,8 @@ public class Withdrawal extends javax.swing.JFrame {
                             .addComponent(lblCurrentBalance)
                             .addComponent(txtWithdrawalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1)
-                            .addComponent(lblMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(214, Short.MAX_VALUE))
+                            .addComponent(lblMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -150,22 +150,22 @@ before using*/
         dbClose();
     }
 
-    public Customer fetchTransactions(String accountNumber) throws ClassNotFoundException, SQLException {
+    public ResultSet fetchTransactions(String accountNumber) throws ClassNotFoundException, SQLException {
             dbConnect();
             Customer c = new Customer();
-            String sql="select * from customer where accountNumber=?";
+            String sql="select * from transactions where accountNumber=?";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, accountNumber);
             ResultSet rst = pstmt.executeQuery();
-            while(rst.next()){
-                c.setName(rst.getString(2));
-                c.setAddress(rst.getString(3));
-                c.setEmail(rst.getString(4));
-                c.setAccountNumber(rst.getString(5));
-                c.setBalance(rst.getString(6));
-            }
-            dbClose();
-            return c;
+//            while(rst.next()){
+//                c.setName(rst.getString(2));
+//                c.setAddress(rst.getString(3));
+//                c.setEmail(rst.getString(4));
+//                c.setAccountNumber(rst.getString(5));
+//                c.setBalance(rst.getString(6));
+//            }
+//            dbClose();
+            return rst;
     }
     
     

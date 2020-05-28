@@ -31,7 +31,7 @@ public class C {
             db.updateBalance(updatedBalance,c);
     }
 
-    public Customer fetchTransactions(String accountNumber) throws ClassNotFoundException, SQLException {
+    public ResultSet fetchTransactions(String accountNumber) throws ClassNotFoundException, SQLException {
             return db.fetchTransactions(accountNumber);
     }
     

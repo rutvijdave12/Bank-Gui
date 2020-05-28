@@ -107,7 +107,7 @@ public class MainScreen extends javax.swing.JFrame {
                             .addComponent(txtAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(321, 321, 321)
-                        .addComponent(lblMsg)))
+                        .addComponent(lblMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(112, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

@@ -133,7 +133,7 @@ public class Statement extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(lblDate))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -178,7 +178,7 @@ public class Statement extends javax.swing.JFrame {
     private void process(){
         
         try {
-            jTable2.setModel(DbUtils.resultSetToTableModel((ResultSet) Cobj.fetchTransactions(c.getAccountNumber())));
+            jTable2.setModel(DbUtils.resultSetToTableModel(Cobj.fetchTransactions(c.getAccountNumber())));
         } catch (SQLException ex) {
             Logger.getLogger(Statement.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
